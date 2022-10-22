@@ -1,6 +1,6 @@
 package com.marindulja.ASM.repository;
 
-import com.marindulja.ASM.model.Role;
+import com.marindulja.ASM.model.users.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

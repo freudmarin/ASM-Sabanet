@@ -1,8 +1,11 @@
 package com.marindulja.ASM.service;
 
+import com.marindulja.ASM.exception.ASMException;
 import com.marindulja.ASM.exception.ResourceNotFoundException;
-import com.marindulja.ASM.model.Role;
-import com.marindulja.ASM.model.User;
+import com.marindulja.ASM.model.users.Acceptance;
+import com.marindulja.ASM.model.users.Role;
+import com.marindulja.ASM.model.users.Technician;
+import com.marindulja.ASM.model.users.User;
 import com.marindulja.ASM.repository.RoleRepository;
 import com.marindulja.ASM.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -27,10 +30,14 @@ import java.util.Optional;
 @Slf4j
 public class UserDetailsServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public UserDetailsServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -52,7 +59,12 @@ public class UserDetailsServiceImpl implements UserService {
     }
 
     public void addUser(User userToBeAdded) {
-        User user = new User();
+        User user;
+        if(userToBeAdded instanceof Acceptance) {
+            user = new Acceptance();
+        } else {
+            user = new Technician();
+        }
         user.setUsername(userToBeAdded.getUsername());
         user.setPassword(passwordEncoder.encode(userToBeAdded.getPassword()));
         user.setFullName(userToBeAdded.getFullName());
@@ -73,8 +85,9 @@ public class UserDetailsServiceImpl implements UserService {
         Optional<User> userData = userRepository.findById(id);
         if (userData.isPresent()) {
             User _user = userData.get();
-            _user.setRole(roleRepository.findByName(user.getRole().getName())
-                    .orElseThrow(() -> new ResourceNotFoundException("This role was not found")));
+           if (user.getRole() != null) {
+               throw new ASMException(HttpStatus.BAD_REQUEST, "Sorry, but the role of the user is not updatabale");
+           }
             _user.setUsername(user.getUsername());
             _user.setFullName(user.getFullName());
             _user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -118,7 +131,6 @@ public class UserDetailsServiceImpl implements UserService {
         return Collections.singletonList(new SimpleGrantedAuthority(role_user));
     }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 }

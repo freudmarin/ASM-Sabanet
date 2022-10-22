@@ -1,6 +1,6 @@
 package com.marindulja.ASM.security;
 
-import com.marindulja.ASM.model.Role;
+import com.marindulja.ASM.model.users.Role;
 import com.marindulja.ASM.repository.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;

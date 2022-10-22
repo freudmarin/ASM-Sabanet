@@ -1,16 +1,16 @@
 package com.marindulja.ASM.controller;
 
-import com.marindulja.ASM.model.Role;
-import com.marindulja.ASM.model.User;
+import com.marindulja.ASM.model.users.Acceptance;
+import com.marindulja.ASM.model.users.Technician;
+import com.marindulja.ASM.model.users.User;
 import com.marindulja.ASM.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,9 +27,15 @@ public class UsersController {
         {"name":"TECHNICHIAN"}
 
     }*/
-    @PostMapping("/add")
-    public ResponseEntity addUser(@RequestBody User user) {
-        userDetailsService.addUser(user);
+    @PostMapping("/addTechnician")
+    public ResponseEntity addTechnician(@Valid @RequestBody Technician technician) {
+        userDetailsService.addUser(technician);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/addAcceptance")
+    public ResponseEntity addAcceptance(@Valid @RequestBody Acceptance acceptance) {
+        userDetailsService.addUser(acceptance);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -43,7 +49,7 @@ public class UsersController {
        return userDetailsService.getUserById(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @Valid @RequestBody User user) {
         return userDetailsService.updateUserById(id, user);
     }
     @DeleteMapping("/{id}")

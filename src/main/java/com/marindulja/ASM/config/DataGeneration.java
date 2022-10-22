@@ -1,6 +1,6 @@
 package com.marindulja.ASM.config;
 
-import com.marindulja.ASM.model.User;
+import com.marindulja.ASM.model.users.Admin;
 import com.marindulja.ASM.repository.RoleRepository;
 import com.marindulja.ASM.repository.UserRepository;
 import com.marindulja.ASM.security.ApplicationRoles;
@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @Slf4j
@@ -31,15 +28,14 @@ public class DataGeneration {
 
     @PostConstruct
     public void generateData() {
-        log.info("Starting to add dummy data!");
-
-
-       if (userRepository.count() ==0) {
-            List<User> users = Arrays.asList(
-                    new User("admin", passwordEncoder.encode("12345"),"Marin Dulja",
-                            roleRepository.findByName(ApplicationRoles.Identifier.ADMIN).get()));
-
-            userRepository.saveAll(users);
+        log.info("Starting to generate admin!");
+        if (userRepository.count() == 0) {
+            Admin admin = new Admin();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("12345"));
+            admin.setFullName("Marin Dulja");
+            admin.setRole(roleRepository.findByName(ApplicationRoles.Identifier.ADMIN).get());
+            userRepository.save(admin);
         }
     }
 }
