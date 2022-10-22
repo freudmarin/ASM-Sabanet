@@ -3,12 +3,15 @@ package com.marindulja.ASM.dto;
 import com.marindulja.ASM.model.ComputerProduct;
 import com.marindulja.ASM.model.clients.Company;
 import com.marindulja.ASM.model.clients.Customer;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import jakarta.validation.Valid;
 
 public class AcceptanceRequest {
 
+    @Valid
     private ComputerProduct  product;
+    @Valid
     private Company company;
+    @Valid
     private Customer customer;
     public ComputerProduct getProduct() {
         return product;

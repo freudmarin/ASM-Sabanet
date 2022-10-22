@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/acceptance")
 @Slf4j
 public class AcceptanceController {
-
     @Autowired
     private AcceptanceService acceptanceService;
 
-
     @PostMapping("/acceptNewProduct")
     public ResponseEntity acceptProduct(@RequestBody @Valid AcceptanceRequest acceptanceRequest) {
-        try {
-            acceptanceService.acceptProduct(acceptanceRequest);
-        } catch (MethodArgumentNotValidException e ){
-            log.warn("Validation errors: " + e.getMessage(), e);
-        }
+        acceptanceService.acceptProduct(acceptanceRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

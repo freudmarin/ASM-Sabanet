@@ -4,7 +4,9 @@ import com.marindulja.ASM.model.BaseEntity;
 import com.marindulja.ASM.model.ComputerProduct;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -40,5 +42,5 @@ public class Client extends BaseEntity<Long> {
     private String clientType;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-    private List<ComputerProduct> products;
+    private List<ComputerProduct> productsOfCustomers;
 }
