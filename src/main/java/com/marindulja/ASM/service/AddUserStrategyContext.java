@@ -2,9 +2,9 @@ package com.marindulja.ASM.service;
 
 import com.marindulja.ASM.model.users.User;
 
-public class AddUserStrategyExe {
+public class AddUserStrategyContext {
     private AddUserStrategy addUserStrategy;
-    AddUserStrategyExe(AddUserStrategy addUserStrategy){
+    AddUserStrategyContext(AddUserStrategy addUserStrategy){
         this.addUserStrategy = addUserStrategy;
     }
     User createUser() {

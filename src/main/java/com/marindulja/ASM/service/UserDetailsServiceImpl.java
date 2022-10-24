@@ -64,10 +64,10 @@ public class UserDetailsServiceImpl implements UserService {
         User user;
         ;
         if (userToBeAddedDto instanceof AcceptanceDto) {
-            AddUserStrategyExe addUserStrategyExe = new AddUserStrategyExe(new AddAcceptanceService());
+            AddUserStrategyContext addUserStrategyExe = new AddUserStrategyContext(new AddAcceptanceService());
             user = addUserStrategyExe.createUser();
         } else {
-            AddUserStrategyExe addUserStrategyExe = new AddUserStrategyExe(new AddTechnicianService());
+            AddUserStrategyContext addUserStrategyExe = new AddUserStrategyContext(new AddTechnicianService());
             user = addUserStrategyExe.createUser();
         }
         user.setUsername(userToBeAddedDto.getUsername());
