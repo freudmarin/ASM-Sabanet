@@ -20,7 +20,7 @@ import java.util.Objects;
 public class ComputerProduct extends BaseEntity<Long> {
 
     @NotBlank(message = "Serial number is mandatory")
-    @Column(name="serial_number", nullable = false, unique = true)
+    @Column(name = "serial_number", nullable = false, unique = true)
     private String serialNumber;
 
     @NotBlank(message = "Problem description is mandatory")
@@ -48,6 +48,9 @@ public class ComputerProduct extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    @OneToOne(mappedBy = "computerProduct")
+    private RepairIssue repairIssue;
 
     @Override
     public boolean equals(Object o) {

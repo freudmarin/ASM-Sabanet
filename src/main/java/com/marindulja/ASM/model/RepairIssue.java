@@ -1,8 +1,10 @@
 package com.marindulja.ASM.model;
 
-import com.marindulja.ASM.model.users.Technician;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -15,10 +17,13 @@ import java.util.Objects;
 @Table(name = "repair_issue")
 
 public class RepairIssue extends BaseEntity<Long> {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "technician_id")
-    private Technician technician;
 
+    @Column(name = "case_number", nullable = false)
+    private String caseNumber;
+
+    @OneToOne()
+    @JoinColumn(name = "computer_id")
+    private ComputerProduct computerProduct;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

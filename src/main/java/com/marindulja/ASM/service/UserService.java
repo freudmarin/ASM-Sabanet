@@ -1,10 +1,8 @@
 package com.marindulja.ASM.service;
 
 
+import com.marindulja.ASM.dto.UserDto;
 import com.marindulja.ASM.exception.ResourceNotFoundException;
-import com.marindulja.ASM.model.users.Acceptance;
-import com.marindulja.ASM.model.users.Role;
-import com.marindulja.ASM.model.users.Technician;
 import com.marindulja.ASM.model.users.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,7 @@ public interface UserService extends UserDetailsService {
      *
      * @return all users stored into the system
      */
-    List<User> getAllUsers();
-    List<Role> getAllRoles();
+    List<UserDto> getAllUsers();
 
     /**
      * Find a user by its username
@@ -31,8 +28,8 @@ public interface UserService extends UserDetailsService {
      */
     User findByUsername(String username) throws ResourceNotFoundException;
 
-    void addUser(User user);
-    ResponseEntity<User> getUserById(long id);
-    ResponseEntity<User> updateUserById(long id, User user);
+    UserDto addUser(UserDto user);
+    ResponseEntity<UserDto> getUserById(long id);
+    ResponseEntity<UserDto> updateUserById(long id, UserDto user);
     ResponseEntity<HttpStatus> deleteUserById(long id);
 }

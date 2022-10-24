@@ -5,8 +5,10 @@ import com.marindulja.ASM.model.BaseEntity;
 import com.marindulja.ASM.model.users.Technician;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -17,18 +19,25 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "repair")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="repair_type",
-        discriminatorType = DiscriminatorType.STRING)
 public class Repair extends BaseEntity<Long> {
 
-    @Column(name = "repair_type", nullable = false, insertable = false, updatable = false)
-    private String repairType;
+    @NotBlank(message = "Repair Status is mandatory")
+    @Column(name = "repair_status")
+    private String repairStatus;
 
     @NotBlank(message = "Amount to be charged is mandatory")
     @Column(name = "amount_to_be_charged")
     private double amountToBeCharged;
 
+
+    @NotBlank(message = "Refusal reason is mandatory")
+    @Column(name = "refusal_reason")
+    private String refusalReason;
+
+
+    @NotBlank(message = "Intervention is mandatory")
+    @Column()
+    private String intervention;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "technician_id", nullable = false)
     private Technician technician;

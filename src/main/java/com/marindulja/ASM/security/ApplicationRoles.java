@@ -15,7 +15,6 @@ public enum ApplicationRoles {
     public class Identifier {
         public static final String ADMIN = "ADMIN";
         public static final String ACCEPTANCE = "ACCEPTANCE";
-
         public static final String TECHNICIAN = "TECHNICIAN";
     }
 

@@ -1,8 +1,8 @@
 package com.marindulja.ASM.controller;
 
-import com.marindulja.ASM.model.users.Acceptance;
-import com.marindulja.ASM.model.users.Technician;
-import com.marindulja.ASM.model.users.User;
+import com.marindulja.ASM.dto.AcceptanceDto;
+import com.marindulja.ASM.dto.TechnicianDto;
+import com.marindulja.ASM.dto.UserDto;
 import com.marindulja.ASM.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +28,27 @@ public class UsersController {
 
     }*/
     @PostMapping("/addTechnician")
-    public ResponseEntity addTechnician(@Valid @RequestBody Technician technician) {
-        userDetailsService.addUser(technician);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<TechnicianDto> addTechnician(@Valid @RequestBody TechnicianDto technicianDto) {
+        return new ResponseEntity(userDetailsService.addUser(technicianDto), HttpStatus.OK);
     }
 
     @PostMapping("/addAcceptance")
-    public ResponseEntity addAcceptance(@Valid @RequestBody Acceptance acceptance) {
-        userDetailsService.addUser(acceptance);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity addAcceptance(@Valid @RequestBody AcceptanceDto acceptanceDto) {
+        return new ResponseEntity(userDetailsService.addUser(acceptanceDto), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userDetailsService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") long id) {
        return userDetailsService.getUserById(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @Valid @RequestBody User user) {
-        return userDetailsService.updateUserById(id, user);
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @Valid @RequestBody UserDto userDto) {
+        return userDetailsService.updateUserById(id, userDto);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {

@@ -1,7 +1,7 @@
 package com.marindulja.ASM.service;
 
-import com.marindulja.ASM.dto.AcceptanceRequest;
+import com.marindulja.ASM.dto.AcceptanceRequestDto;
 
 public interface AcceptanceService {
-    void acceptProduct(AcceptanceRequest acceptanceRequest);
+    void  acceptProduct(AcceptanceRequestDto acceptanceRequest);
 }
